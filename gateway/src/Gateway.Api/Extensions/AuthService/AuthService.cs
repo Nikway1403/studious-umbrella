@@ -1,4 +1,5 @@
 ﻿using AuthService;
+using Gateway.Api.GrpcClients.Authorization;
 using Gateway.Api.Options;
 
 namespace Gateway.Api.Extensions.AuthService;
@@ -22,6 +23,8 @@ public static class AuthService
         { 
             o.Address = new Uri(grpcOptions.AuthServiceUrl); 
         });
+        
+        services.AddScoped<AuthGrpcService>();
         
         return services;
     }
