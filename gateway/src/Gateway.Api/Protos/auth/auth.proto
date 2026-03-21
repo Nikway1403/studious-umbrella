@@ -1,0 +1,48 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option csharp_namespace = "AuthService";
+
+service AuthGrpc {
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc Refresh (RefreshRequest) returns (RefreshResponse);
+}
+
+message LoginRequest {
+  string nickname = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string accessToken = 1;
+  string refreshToken = 2;
+}
+
+message RegisterRequest {
+  string nickname = 1;
+  string password = 2;
+}
+
+message RegisterResponse {
+  int64 userId = 1;
+  string accessToken = 2;
+  string refreshToken = 3;
+}
+
+message ValidateTokenRequest {
+  string accessToken = 1;
+}
+
+message ValidateTokenResponse {
+  bool isValid = 1;
+}
+
+message RefreshRequest {
+  string refreshToken = 1;
+}
+
+message RefreshResponse {
+  string accessToken = 1;
+  string refreshToken = 2;
+}
