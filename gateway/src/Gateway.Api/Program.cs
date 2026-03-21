@@ -13,6 +13,21 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:3000",
+                "https://localhost:3000"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("Gateway", new OpenApiInfo
@@ -33,6 +48,8 @@ app.UseSwaggerUI();
 app.UseWebSockets();
 
 app.UseRouting();
+
+app.UseCors("FrontendPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
