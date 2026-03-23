@@ -11,8 +11,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Protos\" />
-      <Folder Include="Services\" />
+      <ProjectReference Include="..\..\Application\Abstractions\Abstractions.csproj" />
+      <ProjectReference Include="..\..\Application\Application\Application.csproj" />
+      <ProjectReference Include="..\..\Application\Contracts\Contracts.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\Persistence\Persistence.csproj" />
     </ItemGroup>
 
 </Project>
