@@ -6,9 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="RefreshToken\" />
-      <Folder Include="Users\" />
-    </ItemGroup>
-
 </Project>
