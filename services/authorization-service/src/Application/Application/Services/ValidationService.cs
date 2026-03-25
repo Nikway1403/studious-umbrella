@@ -4,6 +4,7 @@ using System.Text;
 using Abstractions.Services;
 using Contracts.DTOs.ValidationDtos;
 using Contracts.Options;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Services;
@@ -12,9 +13,9 @@ public class ValidationService : IValidationService
 {
     private readonly JwtOptions _jwtOptions;
 
-    public ValidationService(JwtOptions jwtOptions)
+    public ValidationService(IOptions<JwtOptions> jwtOptions)
     {
-        _jwtOptions = jwtOptions;
+        _jwtOptions = jwtOptions.Value;
     }
     
     public ValidationDto ValidateAccessToken(string accessToken)

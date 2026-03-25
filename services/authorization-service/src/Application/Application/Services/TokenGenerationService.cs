@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Abstractions.Services;
 using Contracts.Options;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Models.Users;
 
@@ -13,9 +14,9 @@ public class TokenGenerationService : ITokenGenerationService
 {
     private readonly JwtOptions _jwtOptions;
 
-    public TokenGenerationService(JwtOptions jwtOptions)
+    public TokenGenerationService(IOptions<JwtOptions> jwtOptions)
     {
-        _jwtOptions = jwtOptions;
+        _jwtOptions = jwtOptions.Value;
     }
     
     public string GenerateAccessToken(User user)

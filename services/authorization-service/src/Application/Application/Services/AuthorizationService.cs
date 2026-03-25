@@ -3,6 +3,7 @@ using Contracts.DTOs.Authentication;
 using Contracts.Dtos.RefreshTokenDtos;
 using Contracts.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Models.RefreshToken;
 using Models.Users;
 using Persistence.DbContext;
@@ -20,12 +21,12 @@ public class AuthorizationService : IAuthorizationService
         ApplicationDbContext dbContext,
         ITokenGenerationService tokenGenerationService,
         IRefreshTokenService refreshTokenService,
-        JwtOptions jwtOptions)
+        IOptions<JwtOptions> jwtOptions)
     {
         _dbContext = dbContext;
         _tokenGenerationService = tokenGenerationService;
         _refreshTokenService = refreshTokenService;
-        _jwtOptions = jwtOptions;
+        _jwtOptions = jwtOptions.Value;
     }
 
     public async Task<LoginResponseDto> LoginAsync(LoginRequestDto request)
