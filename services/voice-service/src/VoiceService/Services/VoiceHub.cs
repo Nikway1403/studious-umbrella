@@ -15,11 +15,16 @@ public class VoiceHub : Hub
     {
         var connectionId = Context.ConnectionId;
 
-        _roomManager.JoinRoom(roomId, connectionId);
-
         var users = _roomManager.GetUsersInRoom(roomId);
 
-        Console.WriteLine($"User {connectionId} joined {roomId}");
+        if (users.Count >= 2 && !users.Contains(connectionId))
+        {
+            throw new HubException("Комната уже заполнена");
+        }
+
+        _roomManager.JoinRoom(roomId, connectionId);
+
+        users = _roomManager.GetUsersInRoom(roomId);
 
         if (users.Count == 2)
         {
@@ -32,12 +37,10 @@ public class VoiceHub : Hub
     {
         var connectionId = Context.ConnectionId;
         var roomId = _roomManager.GetRoom(connectionId);
-
         if (roomId == null) return;
 
         var users = _roomManager.GetUsersInRoom(roomId);
-
-        var target = users.FirstOrDefault(u => u != connectionId);
+        var target = users.FirstOrDefault(x => x != connectionId);
         if (target == null) return;
 
         await Clients.Client(target).SendAsync("ReceiveOffer", offer);
@@ -47,12 +50,10 @@ public class VoiceHub : Hub
     {
         var connectionId = Context.ConnectionId;
         var roomId = _roomManager.GetRoom(connectionId);
-
         if (roomId == null) return;
 
         var users = _roomManager.GetUsersInRoom(roomId);
-
-        var target = users.FirstOrDefault(u => u != connectionId);
+        var target = users.FirstOrDefault(x => x != connectionId);
         if (target == null) return;
 
         await Clients.Client(target).SendAsync("ReceiveAnswer", answer);
@@ -62,12 +63,10 @@ public class VoiceHub : Hub
     {
         var connectionId = Context.ConnectionId;
         var roomId = _roomManager.GetRoom(connectionId);
-
         if (roomId == null) return;
 
         var users = _roomManager.GetUsersInRoom(roomId);
-
-        var target = users.FirstOrDefault(u => u != connectionId);
+        var target = users.FirstOrDefault(x => x != connectionId);
         if (target == null) return;
 
         await Clients.Client(target).SendAsync("ReceiveIceCandidate", candidate);
@@ -89,8 +88,6 @@ public class VoiceHub : Hub
                 await Clients.Client(user).SendAsync("UserDisconnected");
             }
         }
-
-        Console.WriteLine($"User {connectionId} disconnected");
 
         await base.OnDisconnectedAsync(exception);
     }

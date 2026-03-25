@@ -8,9 +8,15 @@ public class RoomManager
     public void JoinRoom(string roomId, string connectionId)
     {
         if (!_rooms.ContainsKey(roomId))
+        {
             _rooms[roomId] = new List<string>();
+        }
 
-        _rooms[roomId].Add(connectionId);
+        if (!_rooms[roomId].Contains(connectionId))
+        {
+            _rooms[roomId].Add(connectionId);
+        }
+
         _connections[connectionId] = roomId;
     }
 
@@ -23,15 +29,17 @@ public class RoomManager
 
     public string? GetRoom(string connectionId)
     {
-        return _connections.TryGetValue(connectionId, out var room)
-            ? room
+        return _connections.TryGetValue(connectionId, out var roomId)
+            ? roomId
             : null;
     }
 
     public void Remove(string connectionId)
     {
         if (!_connections.TryGetValue(connectionId, out var roomId))
+        {
             return;
+        }
 
         _connections.Remove(connectionId);
 
@@ -40,7 +48,9 @@ public class RoomManager
             users.Remove(connectionId);
 
             if (users.Count == 0)
+            {
                 _rooms.Remove(roomId);
+            }
         }
     }
 }
