@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Профиль</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+</head>
+<body>
+
+<div class="page">
+    <header class="header">
+        <a href="./index.html" class="logo">Voice App</a>
+
+        <nav class="nav">
+            <a class="btn btn-ghost" href="./index.html">Главная</a>
+        </nav>
+    </header>
+
+    <section class="glass-card">
+        <h1>Личный кабинет</h1>
+
+        <div class="token-block">
+            <p class="token-label">Access Token</p>
+            <div id="accessToken" class="token-value"></div>
+        </div>
+
+        <div class="token-block">
+            <p class="token-label">Refresh Token</p>
+            <div id="refreshToken" class="token-value"></div>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <button id="logoutBtn" class="btn btn-danger">Выйти</button>
+        </div>
+    </section>
+</div>
+
+<script type="module" src="../js/profile.js"></script>
+
+</body>
+</html>
